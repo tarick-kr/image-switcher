@@ -1,22 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <app-header></app-header>
+    <div class="container">
+      <div class="left">
+        <image-switcher></image-switcher>
+      </div>
+      <div class="right"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ImageSwitcher from "@/components/ImageSwitcher"
+import AppHeader from "@/components/AppHeader"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ImageSwitcher,
+    AppHeader
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,5 +31,27 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width: 100%
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: calc(100vh - 60px - 16px);
+  flex-wrap: wrap;
+}
+.left {
+  width: 25%;
+}
+.right {
+  width: 75%;
+}
+
+@media screen and (max-width: 500px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
 }
 </style>
