@@ -3,7 +3,12 @@
     <app-header></app-header>
     <div class="container">
       <div class="left">
-        <image-switcher></image-switcher>
+        <image-switcher
+          :srcFront="srcFront"
+          :srcBack="srcBack"
+          :rows="7"
+          :cols="7"
+        ></image-switcher>
       </div>
       <div class="right"></div>
     </div>
@@ -19,6 +24,12 @@ export default {
   components: {
     ImageSwitcher,
     AppHeader
+  },
+  data() {
+    return {
+      srcFront: 'https://www.kadrovik01.com.ua/images/News/2020/12/16.12/16122020_001.jpg',
+      srcBack: 'https://ua.news/wp-content/uploads/2018/12/new-year2018.jpg'
+    }
   }
 }
 </script>

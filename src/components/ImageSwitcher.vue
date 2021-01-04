@@ -73,10 +73,10 @@ export default {
   data() {
     return {
       isFront: true,
-      rows: 8,
-      cols: 8,
-      srcFront: 'https://www.kadrovik01.com.ua/images/News/2020/12/16.12/16122020_001.jpg',
-      srcBack: 'https://ua.news/wp-content/uploads/2018/12/new-year2018.jpg',
+      // rows: 8,
+      // cols: 8,
+      // srcFront: 'https://www.kadrovik01.com.ua/images/News/2020/12/16.12/16122020_001.jpg',
+      // srcBack: 'https://ua.news/wp-content/uploads/2018/12/new-year2018.jpg',
       // srcFront: imgFront,
       // srcBack: imgBack,
       imageFront: new Image(),
@@ -99,6 +99,24 @@ export default {
         off,
         on
       }
+    }
+  },
+  props: {
+    srcFront: {
+      type: String,
+      required: true
+    },
+    srcBack: {
+      type: String,
+      required: true
+    },
+    rows: {
+      type: Number,
+      required: true
+    },
+    cols: {
+      type: Number,
+      required: true
     }
   },
   methods: {
