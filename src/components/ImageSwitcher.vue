@@ -114,16 +114,15 @@ export default {
     }
   },
   methods: {
+    // Создание массива обектов. Каждый элемент массива "представляет собой квадрат", внутри которого через
+    // background-image устанавливается изображении и с помощью метода getPieceOfImageStyle() каждое
+    // изображение позиционируется внутри квадрата... Также каждому элементу массива добавляется поле
+    // "show" со значением true для переднего изображения и "false" -- для заднего.
+    // После чего, с помощью _.shuffle() элементы массива перемешиваются случайным образом...
+    // и в переменные this.countCellsFront, this.countCellsBack, this.countFrontGroup, this.countBackGroup
+    // передаётся кол-во частей изображения
     init() {
       const { rows, cols, srcFront, srcBack, widthContainer, heightContainer } = this
-
-      // Создание массива обектов. Каждый элемент массива "представляет собой квадрат", внутри которого через
-      // background-image устанавливается изображении и с помощью метода getPieceOfImageStyle() каждое
-      // изображение позиционируется внутри квадрата... Также каждому элементу массива добавляется поле
-      // "show" со значением true для переднего изображения и "false" -- для заднего.
-      // После чего, с помощью _.shuffle() элементы массива перемешиваются случайным образом...
-      // и в переменные this.countCellsFront, this.countCellsBack, this.countFrontGroup, this.countBackGroup
-      // передаётся кол-во частей изображения
 
       this.cellsFrontImage = Array.from(new Array(rows * cols).keys()).map(i => ({
         'id': i,
@@ -166,7 +165,6 @@ export default {
     },
     switchShowCells(count, cells, flag) {
       setTimeout(() => {
-        console.log(count)
         if (count > 0) {
           count --
           cells[count].show = flag

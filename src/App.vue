@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <app-header></app-header>
     <div class="container">
-      <div class="left">
+      <div class="component-wrapper">
         <image-switcher
           :srcFront="srcFront"
           :srcBack="srcBack"
@@ -10,24 +9,21 @@
           :cols="7"
         ></image-switcher>
       </div>
-      <div class="right"></div>
     </div>
   </div>
 </template>
 
 <script>
 import ImageSwitcher from "@/components/ImageSwitcher"
-import AppHeader from "@/components/AppHeader"
 
 export default {
   name: 'App',
   components: {
     ImageSwitcher,
-    AppHeader
   },
   data() {
     return {
-      srcFront: 'https://www.kadrovik01.com.ua/images/News/2020/12/16.12/16122020_001.jpg',
+      srcFront: 'https://s0.rbk.ru/v6_top_pics/media/img/2/19/756088015039192.jpeg',
       srcBack: 'https://ua.news/wp-content/uploads/2018/12/new-year2018.jpg'
     }
   }
@@ -35,34 +31,39 @@ export default {
 </script>
 
 <style lang="scss">
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  width: 100%
+  background-color: #fafafa;
 }
 .container {
   display: flex;
-  justify-content: space-between;
-  height: calc(100vh - 60px - 16px);
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-.left {
-  width: 25%;
-}
-.right {
-  width: 75%;
+.component-wrapper {
+  width: 40%;
 }
 
-@media screen and (max-width: 500px) {
-  .left {
-    width: 100%;
+@media screen and (max-width: 1200px) {
+  .component-wrapper {
+    width: 60%;
   }
-  .right {
-    width: 100%;
+}
+
+@media screen and (max-width: 680px) {
+  .component-wrapper {
+    width: 90%;
   }
 }
 </style>
