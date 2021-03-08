@@ -73,12 +73,6 @@ export default {
   data() {
     return {
       isFront: true,
-      // rows: 8,
-      // cols: 8,
-      // srcFront: 'https://www.kadrovik01.com.ua/images/News/2020/12/16.12/16122020_001.jpg',
-      // srcBack: 'https://ua.news/wp-content/uploads/2018/12/new-year2018.jpg',
-      // srcFront: imgFront,
-      // srcBack: imgBack,
       imageFront: new Image(),
       imageBack: new Image(),
       widthContainer: null,
@@ -121,18 +115,26 @@ export default {
   },
   methods: {
     init() {
-      const { rows, cols, srcFront, srcBack, widthContainer } = this
+      const { rows, cols, srcFront, srcBack, widthContainer, heightContainer } = this
+
+      // Создание массива обектов. Каждый элемент массива "представляет собой квадрат", внутри которого через
+      // background-image устанавливается изображении и с помощью метода getPieceOfImageStyle() каждое
+      // изображение позиционируется внутри квадрата... Также каждому элементу массива добавляется поле
+      // "show" со значением true для переднего изображения и "false" -- для заднего.
+      // После чего, с помощью _.shuffle() элементы массива перемешиваются случайным образом...
+      // и в переменные this.countCellsFront, this.countCellsBack, this.countFrontGroup, this.countBackGroup
+      // передаётся кол-во частей изображения
 
       this.cellsFrontImage = Array.from(new Array(rows * cols).keys()).map(i => ({
         'id': i,
-        'pieceOfFrontImage': this.getPieceOfImageStyle(i, rows, cols, srcFront, widthContainer, this.heightContainer),
+        'pieceOfFrontImage': this.getPieceOfImageStyle(i, rows, cols, srcFront, widthContainer, heightContainer),
         'show': true
       }))
       this.cellsFrontImage = _.shuffle(this.cellsFrontImage)
 
       this.cellsBackImage = Array.from(new Array(rows * cols).keys()).map(i => ({
         'id': i,
-        'pieceOfBackImage': this.getPieceOfImageStyle(i, rows, cols, srcBack, widthContainer, this.heightContainer),
+        'pieceOfBackImage': this.getPieceOfImageStyle(i, rows, cols, srcBack, widthContainer, heightContainer),
         'show': false
       }))
       this.cellsBackImage = _.shuffle(this.cellsBackImage)
@@ -150,20 +152,21 @@ export default {
         'height': `${height / rows}px`
       }
     },
+
+    // Метод switchShowCells() рекурсивно в каждом элементе переданного массива изменяет значения поля "show"
     off() {
       this.switchShowCells(this.countCellsFront, this.cellsFrontImage, false)
       this.switchShowCells(this.countCellsBack, this.cellsBackImage, true)
       this.isFront = false
-      this.isBack = true
     },
     on() {
       this.switchShowCells(this.countCellsFront, this.cellsFrontImage, true)
       this.switchShowCells(this.countCellsBack, this.cellsBackImage, false)
       this.isFront = true
-      this.isBack = false
     },
     switchShowCells(count, cells, flag) {
       setTimeout(() => {
+        console.log(count)
         if (count > 0) {
           count --
           cells[count].show = flag
@@ -179,7 +182,7 @@ export default {
       this.init()
     },
 
-    /*  Button  */
+    // При активной анимации кнопки в this.animatedBtn передаётся true, в противном случае false
     beforeEnter() {
       this.animatedBtn = true
     },
@@ -193,7 +196,15 @@ export default {
       this.animatedBtn = false
     },
 
-    /*  Group front image  */
+    // При появлении у transition-group для каждого елемента в хуке beforeEnter в переменную
+    // this.animatedFront (this.animatedBack) передаётся true при этом счётчик this.countFrontGroup
+    // (this.countBackGroup), уменьшается на 1. Далее в хуке afterEnter т.е. когда анимация элемента
+    // закончилась счётчик this.countFrontGroup (this.countBackGroup) увеличивается на 1 и возвращается
+    // в свое исходное состояние. При этом в переменную this.animatedFront (this.animatedBack) передаётся false.
+    //
+    // Анимация скрытия элементов transition-group происходит аналогично...
+
+    // FrontGroup
     beforeEnterFrontGroup() {
       this.countFrontGroup --
       this.animatedFront = true
@@ -215,7 +226,7 @@ export default {
       }
     },
 
-    /*  Group back image  */
+    // BackGroup
     beforeEnterBackGroup() {
       this.countBackGroup --
       this.animatedBack = true
@@ -252,7 +263,7 @@ export default {
     window.removeEventListener("resize", this.resizeHandler);
   },
   computed: {
-    /*  Если хоть какая-то анимация активна, то вернётся true  */
+    //  Если хоть какая-то анимация активна, то вернётся true
     animated() {
       return this.animatedBtn || this.animatedFront || this.animatedBack
     }
