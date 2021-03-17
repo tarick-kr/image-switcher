@@ -1,4 +1,6 @@
 # image-switcher
+## Анимация смены изображений средствами Vue
+### https://www.switcher.tar.com.ua/
 
 ## Project setup
 ```
